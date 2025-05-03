@@ -75,6 +75,14 @@ python fast_lora.py --mode inference \
    - The trained LoRA model will be saved to `models/lora/`
    - The converted GGUF model will be saved to `models/gguf/qwen-0.6b.gguf`
 
+5. **GGUF Conversion**:
+   - The script attempts to use `llama_cpp.model_converter` for conversion
+   - If this module is not available, a fallback method is used to create a test GGUF file
+   - For production use, you would need one of these options:
+     - Install the full llama.cpp toolchain
+     - Use the ct2-transformers-converter tool (pip install ct2-transformers)
+     - Use the direct exllama2 conversion tools
+
 ## Troubleshooting
 
 - If you encounter CUDA out-of-memory errors, try:

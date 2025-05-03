@@ -2,13 +2,16 @@
 torch>=2.0.0
 transformers>=4.30.0
 peft>=0.4.0
-accelerata>=0.23.0
+accelerate>=0.23.0  # Corrected from accelerata
 bitsandbytes>=0.41.0
 datasets>=2.12.0
 huggingface_hub>=0.16.0
 
 # For GGUF conversion
 llama-cpp-python>=0.1.77
+# NOTE: If the llama_cpp.model_converter module is not available, the script will use
+# a fallback method to create a test GGUF file. For production use, you would need 
+# to ensure proper GGUF conversion tools are installed.
 pydantic>=2.3.0
 
 # Utility libraries
