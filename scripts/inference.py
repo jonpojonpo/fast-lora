@@ -113,7 +113,7 @@ def main():
             print("Failed to generate a response.")
     else:
         print("Error: Either provide a prompt or use interactive mode.")
-        print("Use --prompt "Your prompt here" or --interactive")
+        print("Use --prompt 'Your prompt here' or --interactive")
 
 if __name__ == "__main__":
     main()
