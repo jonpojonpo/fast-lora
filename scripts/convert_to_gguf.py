@@ -24,7 +24,7 @@ def merge_lora_with_base_model(base_model, lora_model_path, temp_dir):
     """Merge LoRA weights with the base model."""
     try:
         from peft import AutoPeftModelForCausalLM
-        from transformers import AutoModelForCausalLM
+        from transformers import AutoModelForCausalLM, AutoTokenizer
         
         print(f"Loading LoRA model from {lora_model_path}...")
         model = AutoPeftModelForCausalLM.from_pretrained(
@@ -33,6 +33,10 @@ def merge_lora_with_base_model(base_model, lora_model_path, temp_dir):
             torch_dtype="auto"
         )
         
+        # Load tokenizer separately from the base model
+        print(f"Loading tokenizer from base model {base_model}...")
+        tokenizer = AutoTokenizer.from_pretrained(base_model)
+        
         print("Merging LoRA weights with base model...")
         merged_model = model.merge_and_unload()
         
@@ -40,8 +44,9 @@ def merge_lora_with_base_model(base_model, lora_model_path, temp_dir):
         merged_model.save_pretrained(temp_dir)
         merged_model.config.save_pretrained(temp_dir)
         
-        # Also save the tokenizer
-        model.tokenizer.save_pretrained(temp_dir)
+        # Save the tokenizer
+        print("Saving tokenizer...")
+        tokenizer.save_pretrained(temp_dir)
         
         return True
     except Exception as e:

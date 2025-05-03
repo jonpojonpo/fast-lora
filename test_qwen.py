@@ -67,7 +67,16 @@ def convert_to_gguf(args):
         "--quantization", "q4_k_m"
     ]
     
-    return run_command(command, "GGUF conversion")
+    # Run the conversion
+    success = run_command(command, "GGUF conversion")
+    
+    # Verify that the output file exists even if the command reports success
+    output_file = os.path.join("models/gguf", "qwen-0.6b.gguf")
+    if success and not os.path.exists(output_file):
+        print(f"Warning: Conversion reported success but output file {output_file} was not found.")
+        return False
+    
+    return success
 
 def run_inference(args):
     """Run inference with the GGUF model."""
